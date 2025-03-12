@@ -1,10 +1,10 @@
 
 import java.util.List;
 
-public class Evaluator {
-    private Enviroment enviroment;
+public class Operador {
+    private Entorno enviroment;
 
-    public Object evaluate(Object object, Enviroment env){
+    public Object evaluate(Object object, Entorno env){
         return object;
     };
 
@@ -13,11 +13,11 @@ public class Evaluator {
         return ob;
     }
     
-    public void setEnviroment(Enviroment enviroment) {
+    public void setEnviroment(Entorno enviroment) {
         this.enviroment = enviroment;
     }
 
-    public Enviroment getEnviroment() {
+    public Entorno getEnviroment() {
         return enviroment;
     }
 }

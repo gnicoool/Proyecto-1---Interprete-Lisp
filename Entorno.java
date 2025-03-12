@@ -2,7 +2,7 @@
 import java.util.HashMap;
 import java.util.function.Function;
 
-public class Enviroment{
+public class Entorno{
     private HashMap<String, Object> variables;
     private HashMap<String, Function> funciones;
 
