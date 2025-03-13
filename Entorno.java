@@ -3,12 +3,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
-public class Enviroment<T>{
+public class Entorno<T>{
     private HashMap<String, T> variables;
     private HashMap<String, List<String>> funciones;
     private final HashMap<String, Function<List<T>, T>> operacionesAritmeticas; //Al ser operaciones directas se usa una estructura donde se pasan una lista de parametros y se devuelve un valor
 
-    public Enviroment() {
+    public Entorno() {
         variables = new HashMap<>();
         funciones = new HashMap<>();
         operacionesAritmeticas = new HashMap<>();
@@ -17,7 +17,7 @@ public class Enviroment<T>{
 
     //Getters y Setters
     public HashMap<String, List<String>> getFunciones() {return funciones;}
-    public HashMap<String, T> getVariables() {return variables;}
+    public HashMap<String, T> getVariables() {return (HashMap<String, T>) variables;}
     public HashMap<String, Function<List<T>, T>> getOperacionesAritmeticas() {return operacionesAritmeticas;}
     public void setFunciones(HashMap<String, List<String>> funciones) {this.funciones = funciones;}
     public void setVariables(HashMap<String, T> variables) {this.variables = variables;}
