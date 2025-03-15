@@ -1,0 +1,13 @@
+( 15 3)
+
+(* ( 12 9) 5)
+
+(DEFUN suma (a b)
+    (+ a b))
+    
+(suma 1 2)
+(DEFUN fatorial (num)
+    (COND ((= num 0) 1)
+        ( (* num (fatorial(- num 1))))
+    )
+)

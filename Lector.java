@@ -2,11 +2,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lector {
+    final ArrayList<String> PALABRAS_RESERVADAS = new ArrayList<>(Arrays.asList("QUOTE", "DEFUN", "SETQ", "ATOM", "LIST", "EQUAL", "<", ">", "COND"));
+    private static final ArrayList<String> OPERADORES = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
+    private final ArrayList<String> nombresFunciones = new ArrayList<>();
 
     /*Lee archivo txt y devuelve el contenido como un String
      * @return String con el contenido del txt
@@ -37,11 +41,14 @@ public class Lector {
     public ArrayList<String> sintaxis(String linea){
         Stack<String> pila = new Stack<>();
         ArrayList<String> fun = new ArrayList<>();
-
         StringBuilder sb = new StringBuilder();
+
         for (char c : linea.toCharArray()) {
             if (c == '(') { /*Si encuentra un parentesis abierto, lo agrega a la pila */
                 pila.push("(");
+                if (pila.size() == 1) {
+                    sb.setLength(0); // Reiniciar el buffer cuando empieza una nueva expresión
+                }
                 sb.append(c);
             } else if (c == ')') {
                 if (!pila.isEmpty()) {/*Si encuentra un parentesis cerrado saca la funcion de la pila */
@@ -49,9 +56,7 @@ public class Lector {
                     sb.append(c);
                     
                     if (pila.isEmpty()) {/*Si la pila esta vacia, agrega la funcion al ArrayList */
-                        fun.add(sb.toString());
-                        sb.setLength(0);
-                        
+                        fun.add(sb.toString().trim()); // Agregar la función completa
                     }
                 }
             }else{
@@ -96,8 +101,22 @@ public class Lector {
 
         for (String funcion : funciones) {
             ArrayList<String> tokens = tokenRegex(funcion);
-            alltokens.add(tokens);
+            if(esPrefix(tokens))//Si la operación es prefix la agrega a la lista
+                alltokens.add(tokens);
+            else 
+                System.err.println("Error: Función inválida detectada - " + funcion);
         }
         return alltokens;/*Devuelve un ArrayList de ArrayList con los tokens de cada funcion */
+    }
+
+
+    public boolean esPrefix(ArrayList<String> datos){
+        if (datos.isEmpty()) {
+            return false;
+        }
+        String primerToken = datos.get(0);
+        if(primerToken.equals("DEFUN"))
+            nombresFunciones.add(datos.get(1));
+        return PALABRAS_RESERVADAS.contains(primerToken) || OPERADORES.contains(primerToken)||nombresFunciones.contains(primerToken);
     }
 }
