@@ -76,7 +76,7 @@ public class Lector {
      */
     public ArrayList<String> tokenRegex(String funciones){
         ArrayList<String> tokens = new ArrayList<>();
-        String patron = "\"[^\"]*\"|[0-9]+\\.?[0-9]*|[a-zA-Z\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&][a-zA-Z0-9\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&]*|\\(|\\)";
+        String patron = "\"[^\"]*\"|[0-9]+\\.?[0-9]*|[a-zA-Z\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&\\<\\>][a-zA-Z0-9\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&\\<\\>]*|\\(|\\)";
         Pattern pattern = Pattern.compile(patron);
         Matcher matcher = pattern.matcher(funciones);
 
