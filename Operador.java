@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class Operador<T>{
-    final ArrayList<String> PALABRAS_RESERVADAS = new ArrayList<>(Arrays.asList("QUOTE", "DEFUN", "SETQ", "ATOM", "LIST", "EQUAL", "<", ">", "COND"));
+    final ArrayList<String> PALABRAS_RESERVADAS = new ArrayList<>(Arrays.asList("QUOTE", "'","DEFUN", "SETQ", "ATOM", "LIST", "EQUAL", "<", ">", "COND"));
     private static final ArrayList<String> OPERADORES = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
     private Entorno enviroment;
     private Stack<String> instrucciones = new Stack<>();
@@ -70,6 +70,14 @@ public class Operador<T>{
                             }
                             operandos.add(String.valueOf(predicados.LIST(list)));
                         break;
+                        case "QUOTE":
+                            ArrayList<String> quotedExpression = new ArrayList<>(data.subList(1, data.size()));
+                            
+                            return "(" + String.join(" ", quotedExpression) + ")";
+                        case "'":
+                            ArrayList<String> quotedExpression2 = new ArrayList<>(data.subList(1, data.size()));
+                            
+                            return "(" + String.join(" ", quotedExpression2) + ")";
                         default:
                             return "Valor incorrecto";
                         

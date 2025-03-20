@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
@@ -39,6 +40,25 @@ public class Entorno<T>{
         throw new RuntimeException("Operación no encontrada: "+ operationName);
     }
 
+    //Predicados
+        //Mayor y menor que
+    public boolean MAYOR_MENOR_QUE(String predicado, T val1, T val2){
+        double value1 = 0.00;
+        double value2 = 0.00;
+        if(val1 instanceof Number && val2 instanceof Number){//Revisa si los valores son números
+            value1 = ((Number) val1).doubleValue();
+            value2 = ((Number) val2).doubleValue();
+        }else
+            throw new NumberFormatException("La función mayor que solo admite valores numericos");
+        switch (predicado) { //Dependiendo el predicado ingresado da una respuesta distinta
+            case ">" -> {return value1 > value2;}
+            case "<" -> {return value1 < value2;}
+            default -> throw new RuntimeException("El predicado ingresado no es mayor o menor que");
+        }
+    }
+
+        //
+
     //SETQ
     public void agregarVariable(String name, T valor){
         if(name == null|| name.isEmpty())
@@ -47,5 +67,11 @@ public class Entorno<T>{
             throw new RuntimeException("Este nombre pertenece a una operación predeterminada");
         variables.put(name, valor);
     }
-
+    //Quote
+    public List<T> quote(List<T> tokens) {
+        if (tokens.size() < 2) {
+            throw new RuntimeException("Se espera al menos un argumento");
+        }
+        return tokens.subList(1, tokens.size());
+    }
 }

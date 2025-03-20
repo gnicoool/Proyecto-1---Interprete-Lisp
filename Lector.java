@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
@@ -8,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Lector {
-    final ArrayList<String> PALABRAS_RESERVADAS = new ArrayList<>(Arrays.asList("QUOTE", "DEFUN", "SETQ", "ATOM", "LIST", "EQUAL", "<", ">", "COND"));
+    final ArrayList<String> PALABRAS_RESERVADAS = new ArrayList<>(Arrays.asList("QUOTE","'", "DEFUN", "SETQ", "ATOM", "LIST", "EQUAL", "<", ">", "COND"));
     private static final ArrayList<String> OPERADORES = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
     private final ArrayList<String> nombresFunciones = new ArrayList<>();
 
@@ -49,7 +50,7 @@ public class Lector {
                 if (pila.size() == 1) {
                     sb.setLength(0); // Reiniciar el buffer cuando empieza una nueva expresión
                 }
-                sb.append(c);
+                sb.append(c);  
             } else if (c == ')') {
                 if (!pila.isEmpty()) {/*Si encuentra un parentesis cerrado saca la funcion de la pila */
                     pila.pop();
@@ -76,19 +77,35 @@ public class Lector {
      */
     public ArrayList<String> tokenRegex(String funciones){
         ArrayList<String> tokens = new ArrayList<>();
-        String patron = "\"[^\"]*\"|[0-9]+\\.?[0-9]*|[a-zA-Z\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&\\<\\>][a-zA-Z0-9\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&\\<\\>]*|\\(|\\)";
-        Pattern pattern = Pattern.compile(patron);
-        Matcher matcher = pattern.matcher(funciones);
+        if (esQuote(funciones)) {
+            String sinParentesis = quitarParentesis(funciones);
+            tokens.add(sinParentesis);
+            return tokens;
+        }else{
+            String patron = "\"[^\"]*\"|[0-9]+\\.?[0-9]*|[a-zA-Z\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&\\<\\>][a-zA-Z0-9\\+\\-\\*\\/\\=\\_\\?\\!\\@\\#\\$\\%\\^\\&\\<\\>]*|\\(|\\)";
+            Pattern pattern = Pattern.compile(patron);
+            Matcher matcher = pattern.matcher(funciones);
 
-        while (matcher.find()) {
-            String token = matcher.group().trim();
-            if (!token.isEmpty()&& !token.equals("(") && !token.equals(")")) {/*Si el token no esta vacio y no es un parentesis, lo agrega al ArrayList */
-                tokens.add(token);   
+            while (matcher.find()) {
+                String token = matcher.group().trim();
+                if (!token.isEmpty()&& !token.equals("(") && !token.equals(")")) {/*Si el token no esta vacio y no es un parentesis, lo agrega al ArrayList */
+                    tokens.add(token);   
+                }
             }
+            return tokens;
         }
-        return tokens;/*Devuelve un ArrayList con los tokens */
+
     }
 
+    private String quitarParentesis(String funcion){
+        String sinParentesis = funcion.trim();
+        if (sinParentesis.startsWith("(QUOTE")) {
+            return sinParentesis.substring(7, sinParentesis.length()-1).trim();
+        }else if (sinParentesis.startsWith("('")) {
+            return sinParentesis.substring(2, sinParentesis.length()-1).trim();
+        }
+        return sinParentesis.substring(1, sinParentesis.length()-1).trim();
+    }
 
     /*Procesa el archivo txt y devuelve un ArrayList de ArrayList con los tokens de cada funcion
      * lee el archivo, separa las funciones y los tokens de cada funcion
@@ -118,5 +135,13 @@ public class Lector {
         if(primerToken.equals("DEFUN"))
             nombresFunciones.add(datos.get(1));
         return PALABRAS_RESERVADAS.contains(primerToken) || OPERADORES.contains(primerToken)||nombresFunciones.contains(primerToken);
+    }
+
+    public boolean esQuote(String datos){
+        if (datos.isEmpty()) {
+            return false;
+        }
+        String primerafuncion = datos.trim();
+        return primerafuncion.startsWith("QUOTE") || primerafuncion.startsWith("'");
     }
 }
