@@ -1,28 +1,7 @@
-(LIST 1 2 3)
+(QUOTE ((1 2) (3 4) (5 (6 7))))
 
-(LIST true)
+(QUOTE ((+ 1 2) (EQUAL 3 3) "Hola")) 
 
-(EQUAL 1 2)
+(QUOTE (+ 3 5))
 
-(> 12 5)
-
-(EQUAL 1 1)
-
-(SETQ x 100)
-
-(+ x 1)
-
-(+ 15 (+ 2 3))
-
-(* (/ 12 9) 5)
-
-(DEFUN suma (a b)
-    (+ a b))
-    
-(suma 1 2)
-
-(DEFUN fatorial (num)
-    (COND ((EQUAL num 0) 1)
-        ( (* num (fatorial(- num 1))))
-    )
-)
+(QUOTE "Hola mundo")
