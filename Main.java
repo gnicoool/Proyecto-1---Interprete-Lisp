@@ -14,5 +14,8 @@ public class Main{
         } */
         System.out.println(o.operar(funcionesValidas.get(0)));
         System.out.println(o.operar(funcionesValidas.get(1)));
+        System.out.println(o.operar(funcionesValidas.get(2)));
+        System.out.println(o.operar(funcionesValidas.get(3)));
+        System.out.println(o.operar(funcionesValidas.get(4)));
     }
 }

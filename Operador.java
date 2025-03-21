@@ -133,6 +133,14 @@ public class Operador{
                             }
                             operandos.add(String.valueOf(predicados.LIST(list)));
                         break;
+                        case "QUOTE":
+                            ArrayList<String> quotedExpression = new ArrayList<>(data.subList(1, data.size()));
+                            
+                            return "(" + String.join(" ", quotedExpression) + ")";
+                        case "'":
+                            ArrayList<String> quotedExpression2 = new ArrayList<>(data.subList(1, data.size()));
+                            
+                            return "(" + String.join(" ", quotedExpression2) + ")";
                         default:
                             return "Valor incorrecto";
                     }

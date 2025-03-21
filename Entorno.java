@@ -70,5 +70,11 @@ public class Entorno<T>{
             throw new RuntimeException("Este nombre pertenece a una operación predeterminada");
         variables.put(name, valor);
     }
-
+    //Quote
+    public List<T> quote(List<T> tokens) {
+        if (tokens.size() < 2) {
+            throw new RuntimeException("Se espera al menos un argumento");
+        }
+        return tokens.subList(1, tokens.size());
+    }
 }
