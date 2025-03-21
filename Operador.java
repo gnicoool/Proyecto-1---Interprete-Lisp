@@ -22,7 +22,10 @@ public class Operador{
     private Stack<String> operandos = new Stack<>();
     private Predicados<String> predicados = new Predicados<>();
     private boolean enFuncion = false; //Determina si la ejecución es en el operador principal o uno local entre funciones
-    
+    private Condicionales condicionales;
+    Entorno<Double> e = new Entorno<>();
+
+
     /**
      * Establece el entorno a usar por este operador.
      *
@@ -32,7 +35,15 @@ public class Operador{
         this.enviroment = enviroment;
     }
 
-    
+    /**
+     * Establece la condicional que se utilizará.
+     * 
+     * @param condicionales La condicional a usar.
+     */
+    public void setCondicionales(Condicionales condicionales){
+        this.condicionales = condicionales;
+    }
+
     /**
      * Obtiene el entorno actual.
      *
@@ -88,6 +99,11 @@ public class Operador{
         instrucciones.addAll(data);
         while(!instrucciones.isEmpty()){ //Mientras la pila de instrucciones no esté vacía sacará un valor y evaluará que hacer con el
             String value = instrucciones.pop();
+
+            if (value.startsWith("\"") && value.endsWith("\"")){
+                return value.substring(1, value.length() -1 );
+            }
+
             if(OPERADORES.contains(value)){ //Si es un operador saca dos valores de la pila de operandos y llama al map de operaciones aritmeticas para ejecutar la función
                 Double val1 = Double.parseDouble(operandos.pop());
                 Double val2 = Double.parseDouble(operandos.pop());
@@ -143,6 +159,29 @@ public class Operador{
                             ArrayList<String> quotedExpression2 = new ArrayList<>(data.subList(1, data.size()));
                             
                             return "(" + String.join(" ", quotedExpression2) + ")";
+                        case "COND" :
+                            if (condicionales == null) {
+                                return "Error: No se ha definido una función condicional.";
+                            }
+                            List<List<String>> condiciones = new ArrayList<>();
+                            while (!instrucciones.isEmpty()) {
+                                String cond = instrucciones.pop();
+                                if (instrucciones.isEmpty()) break;
+                                String expr = instrucciones.pop();
+                                condiciones.add(Arrays.asList(cond, expr));        
+                            }
+                            for (List<String> par : condiciones) {
+                                ArrayList<String> tokensCond = new ArrayList<>(Arrays.asList(par.get(0)));
+                                String resultadoCond = operar(tokensCond);
+                                System.out.println(resultadoCond);
+                                if (resultadoCond.equalsIgnoreCase("true")) {
+                                    ArrayList<String> tokensExp = new ArrayList<>(Arrays.asList(par.get(1)));
+                                    return operar(tokensExp);
+                                }
+                            }
+                            // Regresa "NIL" si no encuentra condiciones
+                            return "NIL"; 
+
                         default:
                             return "Valor incorrecto";
                     }
