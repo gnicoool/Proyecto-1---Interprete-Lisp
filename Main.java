@@ -4,7 +4,7 @@ public class Main{
     public static void main(String[] args) {
         Lector l = new Lector();
         ArrayList<ArrayList<String>> funcionesValidas = l.procesarArchivo();
-        Operador<String> o = new Operador<>();
+        Operador o = new Operador();
         // Imprimir los tokens de las funciones válidas
         /* for (ArrayList<String> tokens : funcionesValidas) {
             for (String token : tokens) {
