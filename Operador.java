@@ -31,7 +31,7 @@ public class Operador{
      *
      * @param enviroment El entorno de ejecución (variables y funciones).
      */
-    public void setEnviroment(Entorno enviroment) {
+    public void setEnviroment(Entorno<Double> enviroment) {
         this.enviroment = enviroment;
     }
 
