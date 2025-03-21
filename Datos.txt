@@ -1,28 +1,24 @@
-(LIST 1 2 3)
+(DEFUN suma (a b)
+    (+ a b))
 
-(LIST true)
+(suma (suma 7 5) 2)
 
-(EQUAL 1 2)
+(suma (+ (* 7 5) 5) 2)
+
+(SETQ x (+ 7 9))
+
+(+ x 1)
 
 (> 12 5)
 
 (EQUAL 1 1)
 
-(SETQ x 100)
-
-(+ x 1)
-
 (+ 15 (+ 2 3))
 
 (* (/ 12 9) 5)
 
-(DEFUN suma (a b)
-    (+ a b))
-    
-(suma 1 2)
+(LIST 1 2 3)
 
-(DEFUN fatorial (num)
-    (COND ((EQUAL num 0) 1)
-        ( (* num (fatorial(- num 1))))
-    )
-)
+(LIST true)
+    
+(EQUAL 1 2)
