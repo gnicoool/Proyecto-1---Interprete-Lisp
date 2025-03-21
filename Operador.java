@@ -61,6 +61,8 @@ public class Operador{
      * @return El resultado de la evaluación.
      */
     public String operar(ArrayList<String> data){
+        operandos.clear();
+        instrucciones.clear();
         if(data.get(0).equals("DEFUN")){ //Caso especial en el que se quiera hacer una definicion de funciones
             String nombreFuncion = data.get(1); 
             int contador = 2;
@@ -172,9 +174,8 @@ public class Operador{
                 return "Error el valor " + value + " no está dentro de las palabras reservadas o es el nombre de alguna de la funciones o variables existentes";
             }
         }
-        if(operandos.size() != 1) //Al final evalua si hay más de un elemento en la pila de operandos, si es correcto es porque la expresión no estba bien definida en el txt.
-                                // Caso contrario devielve el valor restante de la pila operandos
-            return "Hay más elementos en la stack. Expresión incorrecta";
+        if(operandos.size() != 1)
+            return "Hay más elementos en la stack. Expresión incorrecta"; //Al final evalua si hay más de un elemento en la pila de operandos, si es correcto es porque la expresión no estba bien definida en el txt.Caso contrario devielve el valor restante de la pila operandos
         return operandos.pop();
     }
 }
