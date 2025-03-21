@@ -6,16 +6,8 @@ public class Main{
         ArrayList<ArrayList<String>> funcionesValidas = l.procesarArchivo();
         Operador o = new Operador();
         // Imprimir los tokens de las funciones válidas
-        /* for (ArrayList<String> tokens : funcionesValidas) {
-            for (String token : tokens) {
-                System.out.println("  " + token);
-            }
+        for (ArrayList<String> tokens : funcionesValidas) {
+            System.out.println(o.operar(tokens));
             System.out.println();
-        } */
-        System.out.println(o.operar(funcionesValidas.get(0)));
-        System.out.println(o.operar(funcionesValidas.get(1)));
-        System.out.println(o.operar(funcionesValidas.get(2)));
-        System.out.println(o.operar(funcionesValidas.get(3)));
-        System.out.println(o.operar(funcionesValidas.get(4)));
-    }
+        }}
 }
