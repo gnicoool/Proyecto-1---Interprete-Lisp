@@ -16,22 +16,22 @@ public class Lector {
      * @return String con el contenido del txt
      * @throws IOException si no se encuentra el archivo o no se puede leer
      */
-    public String lector(){
+    public String lector() {
         StringBuilder leer = new StringBuilder();
         try {
             FileReader fr = new FileReader("Datos.txt");
             BufferedReader lector = new BufferedReader(fr);
-            String linea = lector.readLine();/*lee linea a linea el txt */
-            while (linea!= null) {
-                leer.append(linea);/*Agrega linea actual al StringBuilder */
+            String linea = lector.readLine(); // Lee línea a línea el txt
+            while (linea != null) {
+                leer.append(linea); // Agrega la línea actual al StringBuilder
                 leer.append("\n");  
-                linea = lector.readLine(); /*Lee la siguiente linea */
+                linea = lector.readLine(); // Lee la siguiente línea
             }
             lector.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return leer.toString();/*Devuelve el contenido de txt como un string */
+        return leer.toString(); // Devuelve el contenido de txt como un string
     }
 
     /*Separa las funciones de un String segun parentesis balanceados y las almacena en un ArrayList
@@ -42,6 +42,7 @@ public class Lector {
         Stack<String> pila = new Stack<>();
         ArrayList<String> fun = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
+        boolean esCond = false;
 
         for (char c : linea.toCharArray()) {
             if (c == '(') { /*Si encuentra un parentesis abierto, lo agrega a la pila */
@@ -54,15 +55,17 @@ public class Lector {
                 if (!pila.isEmpty()) {/*Si encuentra un parentesis cerrado saca la funcion de la pila */
                     pila.pop();
                     sb.append(c);
-                    
                     if (pila.isEmpty()) {/*Si la pila esta vacia, agrega la funcion al ArrayList */
-                        fun.add(sb.toString().trim()); // Agregar la función completa
+                        if (sb.toString().contains("COND")){
+                            fun.add(sb.toString().trim()); // Agregar función pura
+                        } else {
+                            fun.add(sb.toString().trim()); // Agregar la función completa
+                        }
                     }
                 }
             }else{
                 if (!pila.isEmpty()) {
-                    sb.append(c);
-                    
+                    sb.append(c);   
                 }
             }
         }
