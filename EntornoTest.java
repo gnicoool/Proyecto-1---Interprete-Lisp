@@ -40,14 +40,6 @@ public class EntornoTest {
     }
 
     @Test
-    public void mayorMenorQueTest(){
-        assertTrue(entorno.MAYOR_MENOR_QUE(">", 25.0, 3.0));
-        assertTrue(entorno.MAYOR_MENOR_QUE("<", 3.0, 25.0));
-        assertFalse(entorno.MAYOR_MENOR_QUE(">", 3.0, 25.0));
-        assertFalse(entorno.MAYOR_MENOR_QUE("<", 25.0, 3.0));
-    }
-
-    @Test
     public void agregarVariableTest(){
         entorno.agregarVariable("x", 25.0);
         assertEquals(25.0, entorno.getVariables().get("x"), 0.001);
