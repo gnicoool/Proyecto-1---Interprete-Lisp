@@ -10,10 +10,12 @@
 import java.util.List;
 
 public class Condicionales {
-    private Operador<Double> operador;
+private Operador operador;
+
     private Lector lector; 
 
-    public Condicionales(Operador<Double> operador, Lector lector) {
+public Condicionales(Operador operador, Lector lector) {
+
         this.operador = operador;
         this.lector = lector;
     }
