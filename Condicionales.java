@@ -42,10 +42,6 @@ public class Condicionales {
                 break;*/
             }
 
-
-
-
-
         /*
         while (!condiciones.isEmpty()) {
             String condicion = condiciones.pop();
