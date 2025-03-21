@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
@@ -43,6 +42,7 @@ public class Lector {
         Stack<String> pila = new Stack<>();
         ArrayList<String> fun = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
+        boolean esCond = false;
 
         for (char c : linea.toCharArray()) {
             if (c == '(') { /*Si encuentra un parentesis abierto, lo agrega a la pila */
@@ -57,7 +57,11 @@ public class Lector {
                     sb.append(c);
                     
                     if (pila.isEmpty()) {/*Si la pila esta vacia, agrega la funcion al ArrayList */
-                        fun.add(sb.toString().trim()); // Agregar la función completa
+                        if (sb.toString().contains("COND")){
+                            fun.add(sb.toString().trim()); // Agrega la función tal y como ingresa
+                        } else{
+                            fun.add(sb.toString().trim()); // Agregar la función completa
+                        }
                     }
                 }
             }else{
@@ -92,7 +96,7 @@ public class Lector {
                     tokens.add(token);   
                 }
             }
-            return tokens;
+            return tokens; /* Devuelve un ArrayList con los tokens */
         }
 
     }
